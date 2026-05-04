@@ -30,7 +30,7 @@ jobs:
 
     - name: Push Docker Image
       run: |
-        docker push jorgam98/transitions-page:0.0.6 .
+        docker push jorgam98/transitions-page:0.0.6
     
     #- name: Build the Docker image
     #  run: docker build . --file DockerFile --tag my-image-name:$(date +%s)
