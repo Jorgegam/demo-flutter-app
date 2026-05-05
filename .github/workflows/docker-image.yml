@@ -29,10 +29,10 @@ jobs:
         echo "Fin del login"
     
     - name: Build image
-      run: docker build -t ghcr.io/${{ github.repository }}:latest .
+      run: docker build -t ghcr.io/${{ github.repository }} .
 
     - name: Push image
-      run: docker push ghcr.io/${{ github.repository }}:latest
+      run: docker push ghcr.io/${{ github.repository }}:0.0.1
     #- name: Build Docker Image
       #run: |
         #docker build --tag jorgam98/transitions-page:0.0.6 .
