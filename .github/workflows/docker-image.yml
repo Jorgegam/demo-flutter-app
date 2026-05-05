@@ -28,11 +28,14 @@ jobs:
         echo "$DOCKER_PASSWORD" | docker login ghcr.io -u $DOCKER_USER --password-stdin
         echo "Fin del login"
     
-    - name: Build image
-      run: docker build -t ghcr.io/${{ github.repository }} .
+    - name: Set lowercase repo name
+      run: echo "REPO_LOWER=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
+    - name: Build image
+      run: docker build -t ghcr.io/$REPO_LOWER:latest .
+    
     - name: Push image
-      run: docker push ghcr.io/${{ github.repository }}:0.0.1
+      run: docker push ghcr.io/$REPO_LOWER:latest
     #- name: Build Docker Image
       #run: |
         #docker build --tag jorgam98/transitions-page:0.0.6 .
