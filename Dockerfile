@@ -34,8 +34,17 @@ COPY web/ web/
 # Se instalan dependencias
 RUN flutter pub get -v
 # Se crea proyecto compilado
-RUN flutter build web
- 
+RUN flutter build web --release
+
+# Se obtiene la versión
+RUN grep '^version:' pubspec.yaml | \
+    sed 's/version: //g' | \
+    cut -d '+' -f 1 > /tmp/version.txt
+
+# Se agrega query param al js
+RUN VERSION=$(cat /tmp/version.txt) && \
+    sed -i "s|flutter_bootstrap.js|flutter_bootstrap.js?v=${VERSION}|g" build/web/index.html
+
 FROM nginx:1.29-alpine3.23
 COPY --from=builder /home/flutteruser/app/build/web /usr/share/nginx/html
  
